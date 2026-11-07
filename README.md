@@ -51,3 +51,10 @@ All visible branding is ONNA / 온나. The former browser draft key is retained 
 ## Email authentication
 Email/password sign-in, confirmation-based signup, resend confirmation and recovery-session password update are implemented. Passwords are cleared after requests and never stored in drafts. Production redirect URLs are configured. Verified SMTP and Google/Facebook/Apple console credentials remain pending. Eight Node tests and mocked auth controller checks pass; real email delivery and provider sign-in remain unverified.
 
+
+## Korean login providers
+Facebook UI replaced with Naver and Kakao. Kakao uses the built-in provider. Naver is mapped to custom:naver and stays disabled until its custom provider configuration and end-to-end callback are verified; custom provider availability is an explicit deployment flag, not assumed from a displayed button. Provider registration and secrets remain pending owner developer-console sign-in. Contact: ceo@blueit.kr.
+
+## Privacy, account controls and locales (2026-11-07)
+Public privacy/terms/rights pages, explicit age 14+ and terms acknowledgement, owner-only server timestamped acknowledgement records, data export and authenticated self-deletion are implemented. External fonts removed. Account deletion revokes sessions then deletes only the identity verified by Auth; no body-supplied owner ID is accepted. Frontend has no admin credentials.
+Korean/English/Japanese/Simplified Chinese/Thai UI selector preserves user content. Formal legal documents remain Korean with translated summaries. Overseas processing/subprocessor country and retention disclosures still require operator/vendor confirmation; implementation is not a legal compliance certification. SMTP and Naver/Kakao app approval/credential setup remain separate.

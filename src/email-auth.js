@@ -7,7 +7,7 @@ export function emailAuthError(error){
  return '요청을 완료하지 못했습니다. 연결 상태를 확인하고 다시 시도해 주세요.';
 }
 export function passwordsMatch(password,confirmation){return password.length>=8&&password.length<=128&&password===confirmation;}
-export function setupEmailAuth({client,dialog,getDraft,draftKey,onSignedIn}){
+export function setupEmailAuth({beforeSignup=()=>true,client,dialog,getDraft,draftKey,onSignedIn}){
  const $=id=>document.getElementById(id),form=$('emailAuthForm'),email=$('emailAddress'),password=$('emailPassword'),confirmation=$('emailConfirm'),status=$('emailAuthStatus');
  const modeButtons=[...dialog.querySelectorAll('[data-email-mode]')];let mode='login',busy=false,recoveryAllowed=false,sendAfter=0;
  function setMode(next){if(busy)return;if(next==='update'&&!recoveryAllowed)return;mode=next;status.textContent='';password.value='';confirmation.value='';confirmation.setCustomValidity('');
@@ -21,7 +21,7 @@ export function setupEmailAuth({client,dialog,getDraft,draftKey,onSignedIn}){
  confirmation.addEventListener('input',()=>confirmation.setCustomValidity(''));password.addEventListener('input',()=>confirmation.setCustomValidity(''));
  dialog.addEventListener('close',()=>{password.value='';confirmation.value='';});
  form.addEventListener('submit',async event=>{event.preventDefault();if(busy||!form.reportValidity())return;if((mode==='signup'||mode==='update')&&!passwordsMatch(password.value,confirmation.value)){confirmation.setCustomValidity('비밀번호가 일치하지 않습니다.');confirmation.reportValidity();return;}
-  const submittedMode=mode;setBusy(true);status.textContent='처리 중…';
+  if(mode==='signup'&&!beforeSignup())return;const submittedMode=mode;setBusy(true);status.textContent='처리 중…';
   try{try{localStorage.setItem(draftKey,JSON.stringify(getDraft()));}catch{/* Authentication can continue without saving an editor draft. */}
    let result;const credentials={email:email.value.trim(),password:password.value};
    if(mode==='signup')result=await client.auth.signUp({...credentials,options:{emailRedirectTo:location.origin+'/#studio'}});
