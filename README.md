@@ -1,6 +1,6 @@
-# Moalink / 모아링크 (working name)
+# ONNA / 온나
 A Korean-first link-in-bio product for Instagram creators, individuals, shops, and small brands.
-Brand and domain are not finalized. There is no hospitality-only focus.
+The user selected ONNA / 온나 on 2026-11-07. A custom domain is not yet configured. There is no hospitality-only focus.
 
 ## v0.2 implemented
 - Responsive editor and mobile profile preview
@@ -44,3 +44,6 @@ Browser checks passed for live preview, theme changes, draft reload, login dialo
 A new charcoal/lime landing page leads into the existing editor. Theme cards apply actual editor themes, the username CTA carries the selected slug into the editor, and the editor remains usable without an account. The service is free; there is no pricing tier, checkout or card collection. Demo profiles are labelled examples. Local stock images illustrate fictional profiles and are not endorsements.
 
 Validation for v0.3: six Node tests; browser landing-to-studio slug transfer, template application, draft restoration, social-only dialog, live disabled-provider state, responsive widths 390/768/1024, and public page fallback. Mocked OAuth provider-boundary checks verify Google/Facebook/Apple provider selection, S256 PKCE, same-origin callbacks, and draft preservation. Real provider approval and sign-in remain pending owner console configuration.
+
+## ONNA rebrand
+All visible branding is ONNA / 온나. The former browser draft key is retained only as a read fallback so existing drafts survive the rename. Infrastructure IDs, Supabase URL and existing public URLs remain stable. Brand selection does not establish trademark clearance or domain ownership.
