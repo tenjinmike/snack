@@ -1,6 +1,6 @@
 # ONNA / 온나
 A Korean-first link-in-bio product for Instagram creators, individuals, shops, and small brands.
-The user selected ONNA / 온나 on 2026-11-07. A custom domain is not yet configured. There is no hospitality-only focus.
+The user selected ONNA / 온나 on 2026-11-07. The production domain is https://onna.life. There is no hospitality-only focus.
 
 ## v0.2 implemented
 - Responsive editor and mobile profile preview
@@ -47,3 +47,7 @@ Validation for v0.3: six Node tests; browser landing-to-studio slug transfer, te
 
 ## ONNA rebrand
 All visible branding is ONNA / 온나. The former browser draft key is retained only as a read fallback so existing drafts survive the rename. Infrastructure IDs, Supabase URL and existing public URLs remain stable. Brand selection does not establish trademark clearance or domain ownership.
+
+## Email authentication
+Email/password sign-in, confirmation-based signup, resend confirmation and recovery-session password update are implemented. Passwords are cleared after requests and never stored in drafts. Production redirect URLs are configured. Verified SMTP and Google/Facebook/Apple console credentials remain pending. Eight Node tests and mocked auth controller checks pass; real email delivery and provider sign-in remain unverified.
+
