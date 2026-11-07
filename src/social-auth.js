@@ -1,4 +1,4 @@
-export const providers=['google','facebook','apple'];
+export const providers=['google','facebook'];
 export function readAuthReturn(location){const query=new URLSearchParams(location.search),hash=new URLSearchParams(location.hash.replace(/^#/,''));return {hasCallback:query.has('code')||query.has('error')||hash.has('error')||hash.has('access_token'),error:query.has('error')||hash.has('error')};}
 export function restoreDraft(value){if(!value||typeof value!=='object')return null;return {slug:typeof value.slug==='string'?value.slug.slice(0,30):'my-page',display_name:typeof value.display_name==='string'?value.display_name.slice(0,80):'',bio:typeof value.bio==='string'?value.bio.slice(0,500):'',theme:['violet','ocean','ink'].includes(value.theme)?value.theme:'violet',links:Array.isArray(value.links)?value.links.filter(l=>l&&typeof l.label==='string'&&typeof l.url==='string').slice(0,30).map(l=>({label:l.label.slice(0,80),url:l.url.slice(0,2048)})):[],is_published:value.is_published===true};}
 export function setupSocialAuth({client,dialog,status,retry,getDraft,draftKey}){
