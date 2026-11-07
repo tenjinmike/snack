@@ -21,7 +21,7 @@ Measure ad impressions and realized net RPM; compare against engagement/conversi
 Distinguish advertising revenue from the acquisition advertising budget.
 
 ## 2027 support-program preparation
-BlueIT start date: 2024-06-01. Eligibility and funding depend on final applicant-company announcements.
+BlueIT start date: 2024-03-15 (confirmed against the user-provided business registration certificate). Eligibility and funding depend on final applicant-company announcements.
 Prepare genuine customer interviews, release history, pilot evidence, technical measurements, original methods and spend plans.
 Do not describe API integration alone as proven deep-tech. No maximum award or selection is guaranteed.
 Track software/business validation work separately from existing IT field-service work.

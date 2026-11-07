@@ -4,10 +4,10 @@
 
 ## 공통 주소
 
-- 서비스 기준 주소: `https://blueit-link-preview.vercel.app`
+- 서비스 기준 주소: `https://onna.life`
 - 제공업체에 등록할 콜백: `https://fzjdoeafuckadjlnjpkz.supabase.co/auth/v1/callback`
-- Supabase Site URL: `https://blueit-link-preview.vercel.app`
-- Supabase 허용 Redirect URL: `https://blueit-link-preview.vercel.app/` 및 `https://blueit-link-preview.vercel.app/#studio`
+- Supabase Site URL: `https://onna.life`
+- Supabase 허용 Redirect URL: `https://onna.life/` 및 `https://onna.life/#studio`
 - 실제 서비스 도메인이 정해지면 각 콘솔과 Supabase에서 주소를 갱신합니다. 동적으로 바뀌는 배포 주소를 정식 로그인 주소로 쓰지 않습니다.
 
 설정 위치: [Supabase 인증 제공업체](https://supabase.com/dashboard/project/fzjdoeafuckadjlnjpkz/auth/providers), [URL 설정](https://supabase.com/dashboard/project/fzjdoeafuckadjlnjpkz/auth/url-configuration).
