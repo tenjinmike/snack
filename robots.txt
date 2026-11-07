@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /*?*code=
+Sitemap: https://onna.life/sitemap.xml
