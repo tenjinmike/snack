@@ -35,3 +35,7 @@ Use commercial hosting terms appropriate for launch; the current deployment is a
 - Real signup-email delivery remains to be verified after email/redirect configuration
 
 See product-strategy.md for advertising, Korean/Japanese market validation and grant preparation.
+
+## Codex continuation verification (2026-11-07)
+Adopted the latest Work implementation. Corrected Korean account/status messages and ignored stale profile-load/save responses after account changes. Clearing an expired or signed-out session also clears the previous account profile from the editor.
+Browser checks passed for live preview, theme changes, draft reload, login dialog, mobile width, and missing public pages against the live Supabase API. Email delivery and a full real-account signup/login flow remain unverified until SMTP and redirect configuration are completed.
