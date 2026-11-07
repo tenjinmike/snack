@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BlueIT Link Studio — Prototype</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f7fb;color:#19243d;font:16px/1.6 system-ui,sans-serif}
+header{background:#132548;color:white;padding:22px 5%}header p{margin:4px 0;color:#c5d3ef}h1{font-size:24px;margin:0}main{max-width:1100px;margin:36px auto;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:32px}
+section{background:white;border:1px solid #e0e5ef;border-radius:20px;padding:28px}h2{margin-top:0;font-size:20px}label{display:block;font-weight:600;margin:15px 0 5px}input,textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid #b6c2d7;border-radius:8px}textarea{min-height:90px}button{font:inherit;cursor:pointer;background:#234fc4;color:white;border:0;border-radius:9px;padding:10px 16px;margin:14px 8px 0 0}button.secondary{background:#e8edf8;color:#234fc4}
+.small{font-size:13px;color:#59677e}#preview{background:#ecf1ff;text-align:center;min-height:400px}#preview h2{font-size:28px;margin:40px 0 12px}#preview p{white-space:pre-wrap}#preview a{display:block;background:white;border:1px solid #c5d3ef;color:#193675;padding:14px;border-radius:12px;margin:12px 0;text-decoration:none;overflow-wrap:anywhere}#status{min-height:26px;color:#264c93}footer{max-width:1100px;margin:0 auto 30px;padding:0 20px;color:#59677e;font-size:13px}@media(max-width:720px){main{grid-template-columns:1fr}}
+</style>
+<header><h1>BlueIT Link Studio</h1><p>한 페이지로 시작하는 다국어 비즈니스 · 편집 시제품</p></header>
+<main><section><h2>비즈니스 페이지 만들기</h2><p class="small">이름과 소개를 입력하고 링크를 구성하세요. 이 버전은 브라우저 안에서만 동작합니다.</p>
+<form id="editor"><label for="business">비즈니스 이름</label><input id="business" maxlength="80" value="나의 비즈니스">
+<label for="intro">소개</label><textarea id="intro" maxlength="500">고객을 만나는 나만의 작은 공간</textarea>
+<div id="fields"></div><button type="submit">이 브라우저에 저장</button><button class="secondary" type="button" id="export">JSON 내보내기</button>
+<p id="status" role="status" aria-live="polite"></p></form></section>
+<section id="preview" aria-label="페이지 미리보기"><p class="small">LIVE PREVIEW</p><h2 id="previewTitle"></h2><p id="previewIntro"></p><nav id="previewLinks" aria-label="비즈니스 링크"></nav><p class="small">광고·AI·로그인·공개 배포는 아직 연결되지 않았습니다.</p></section></main>
+<footer>시제품 · 저장 정보는 이 기기와 브라우저에만 남습니다. 공개 페이지 발행 및 방문 통계는 후속 개발 예정입니다.</footer>
+<script>
+const fields=document.getElementById('fields'), status=document.getElementById('status');
+for(let i=0;i<3;i++){const n=i+1;const label=document.createElement('label');label.htmlFor='label'+i;label.textContent='링크 '+n+' 이름';const title=document.createElement('input');title.id='label'+i;title.maxLength=60;title.value=['예약 문의','서비스 소개','소셜 채널'][i];const urlLabel=document.createElement('label');urlLabel.htmlFor='url'+i;urlLabel.textContent='링크 '+n+' 주소 (HTTPS)';const url=document.createElement('input');url.id='url'+i;url.type='url';url.placeholder='https://';fields.append(label,title,urlLabel,url);}
+function safeUrl(value){try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password?u.href:null;}catch{return null;}}
+function collect(){return {version:1,name:document.getElementById('business').value,intro:document.getElementById('intro').value,links:[0,1,2].map(i=>({label:document.getElementById('label'+i).value,url:document.getElementById('url'+i).value}))};}
+function render(){const data=collect();document.getElementById('previewTitle').textContent=data.name;document.getElementById('previewIntro').textContent=data.intro;const nav=document.getElementById('previewLinks');nav.replaceChildren();data.links.forEach(l=>{const url=safeUrl(l.url);if(!url||!l.label.trim())return;const a=document.createElement('a');a.textContent=l.label;a.href=url;a.target='_blank';a.rel='noopener noreferrer';nav.append(a);});}
+try{const data=JSON.parse(localStorage.getItem('blueit-link-draft-v1')||'null');if(data&&data.version===1&&typeof data.name==='string'&&typeof data.intro==='string'&&Array.isArray(data.links)){document.getElementById('business').value=data.name.slice(0,80);document.getElementById('intro').value=data.intro.slice(0,500);data.links.slice(0,3).forEach((l,i)=>{if(!l||typeof l.label!=='string'||typeof l.url!=='string')return;document.getElementById('label'+i).value=l.label.slice(0,60);document.getElementById('url'+i).value=l.url;});}}catch{status.textContent='이전 초안을 불러올 수 없습니다. 새로 편집할 수 있습니다.';}
+document.getElementById('editor').addEventListener('input',render);
+document.getElementById('editor').addEventListener('submit',e=>{e.preventDefault();const data=collect();if(data.links.some(l=>l.url&&!safeUrl(l.url))){status.textContent='링크 주소는 사용자 정보가 없는 HTTPS 주소를 입력하세요.';return;}try{localStorage.setItem('blueit-link-draft-v1',JSON.stringify(data));status.textContent='이 브라우저에 저장했습니다. 공개 발행은 되지 않습니다.';}catch{status.textContent='브라우저 저장을 사용할 수 없습니다. JSON 내보내기를 이용하세요.';}});
+document.getElementById('export').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(collect(),null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='business-page.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent='초안을 JSON 파일로 내보냈습니다.';});render();
+</script></html>
