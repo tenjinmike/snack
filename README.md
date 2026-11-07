@@ -6,7 +6,7 @@ Brand and domain are not finalized. There is no hospitality-only focus.
 - Responsive editor and mobile profile preview
 - Up to 30 HTTPS links with add/remove/reorder
 - Three themes; local draft storage
-- Supabase email/password signup and login UI, session refresh and logout
+- Google / Facebook / Apple social sign-in UI with live provider availability, PKCE, session refresh and logout
 - Authenticated profile storage with owner-enforced PostgreSQL RLS
 - Explicit public/private switch, unique slug and /u/:slug public profiles
 - No service-role or other private API key in frontend
@@ -39,3 +39,8 @@ See product-strategy.md for advertising, Korean/Japanese market validation and g
 ## Codex continuation verification (2026-11-07)
 Adopted the latest Work implementation. Corrected Korean account/status messages and ignored stale profile-load/save responses after account changes. Clearing an expired or signed-out session also clears the previous account profile from the editor.
 Browser checks passed for live preview, theme changes, draft reload, login dialog, mobile width, and missing public pages against the live Supabase API. Email delivery and a full real-account signup/login flow remain unverified until SMTP and redirect configuration are completed.
+
+## v0.3 creator landing and free service
+A new charcoal/lime landing page leads into the existing editor. Theme cards apply actual editor themes, the username CTA carries the selected slug into the editor, and the editor remains usable without an account. The service is free; there is no pricing tier, checkout or card collection. Demo profiles are labelled examples. Local stock images illustrate fictional profiles and are not endorsements.
+
+Validation for v0.3: six Node tests; browser landing-to-studio slug transfer, template application, draft restoration, social-only dialog, live disabled-provider state, responsive widths 390/768/1024, and public page fallback. Mocked OAuth provider-boundary checks verify Google/Facebook/Apple provider selection, S256 PKCE, same-origin callbacks, and draft preservation. Real provider approval and sign-in remain pending owner console configuration.
