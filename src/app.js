@@ -1,4 +1,5 @@
 import {setupI18n} from './i18n.js';
+import {setupSharing} from './sharing.js';
 import {createClient} from '@supabase/supabase-js';
 import {safeUrl, validateProfile, MAX_LINKS} from './model.js';
 import {setupSocialAuth,readAuthReturn,restoreDraft} from './social-auth.js';
@@ -31,7 +32,7 @@ const legal=setupLegal({client,authDialog:$('authDialog'),getUser:()=>user,onDel
 setupSocialAuth({beforeAuth:legal.beforeSignup,client,dialog:$('authDialog'),status:$('authStatus'),retry:$('retryProviders'),getDraft:collect,draftKey});
 setupEmailAuth({beforeSignup:legal.beforeSignup,client,dialog:$('authDialog'),getDraft:collect,draftKey,onSignedIn:setUser});
 $('logout').addEventListener('click',async()=>{const {error}=await client.auth.signOut();if(error){notify(errors(error));return;}await setUser(null);fill(empty);notify('로그아웃했습니다.');});
-async function showPublic(slug){$('landing').hidden=true;document.body.classList.add('public-view');document.querySelector('.site-header .brand').href='/';$('editorApp').hidden=true;$('publicApp').hidden=false;$('authOpen').hidden=true;$('publicProfile').hidden=true;$('publicStatus').textContent='페이지를 불러오는 중…';const {data,error}=await client.from('profiles').select('slug,display_name,bio,theme,links,is_published').eq('slug',slug).eq('is_published',true).maybeSingle();if(error){$('publicStatus').textContent='페이지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.';return;}if(!data){$('publicStatus').textContent='페이지가 없거나 비공개 상태입니다.';document.title='페이지를 찾을 수 없어요 · 온나';return;}$('publicStatus').textContent='';$('publicProfile').hidden=false;profileView($('publicProfile'),data);document.title=data.display_name+' · 온나';}
+async function showPublic(slug){$('landing').hidden=true;document.body.classList.add('public-view');document.querySelector('.site-header .brand').href='/';$('editorApp').hidden=true;$('publicApp').hidden=false;$('authOpen').hidden=true;$('publicProfile').hidden=true;$('publicStatus').textContent='페이지를 불러오는 중…';const {data,error}=await client.from('profiles').select('slug,display_name,bio,theme,links,is_published').eq('slug',slug).eq('is_published',true).maybeSingle();if(error){$('publicStatus').textContent='페이지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.';return;}if(!data){$('publicStatus').textContent='페이지가 없거나 비공개 상태입니다.';document.title='페이지를 찾을 수 없어요 · 온나';return;}$('publicStatus').textContent='';$('publicProfile').hidden=false;profileView($('publicProfile'),data);document.title=data.display_name+' · 온나';setupSharing({container:$('publicApp'),getUrl:()=>location.origin+'/u/'+data.slug,getTitle:()=>data.display_name+' · ONNA'});}
 const route=location.pathname.match(/^\/u\/([a-z0-9][a-z0-9_-]{2,29})\/?$/);if(route){showPublic(route[1]).catch(()=>{$('publicStatus').textContent='연결을 확인해 주세요.';});}else{initEditor().catch(e=>notify(errors(e)));}
 
 
@@ -39,4 +40,5 @@ function showStudio(){if(location.pathname.startsWith('/u/'))return;$('landing')
 function showHome(){if(location.pathname.startsWith('/u/'))return;$('landing').hidden=false;$('editorApp').hidden=true;document.body.classList.remove('studio-view');history.replaceState(null,'','#home');window.scrollTo({top:0,behavior:'instant'});}
 document.querySelectorAll('[data-start]').forEach(b=>b.addEventListener('click',showStudio));$('backHome').addEventListener('click',showHome);$('claimForm').addEventListener('submit',event=>{event.preventDefault();if($('claimSlug').value.trim()){$('slug').value=$('claimSlug').value.trim();preview();}showStudio();});document.querySelectorAll('[data-template]').forEach(b=>b.addEventListener('click',()=>{document.querySelector('input[name=theme][value="'+b.dataset.template+'"]').checked=true;preview();showStudio();}));window.addEventListener('hashchange',()=>{if(location.hash==='#home')showHome();else if(location.hash==='#studio')showStudio();});if(location.hash==='#studio')showStudio();
 
+setupSharing({container:$('shareBox'),getUrl:()=>!$('shareBox').hidden?$('shareUrl').value:null,getTitle:()=>$('displayName').value+' · ONNA'});
 setupI18n();
