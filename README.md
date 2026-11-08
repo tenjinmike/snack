@@ -53,7 +53,7 @@ Email/password sign-in, confirmation-based signup, resend confirmation and recov
 
 
 ## Korean login providers
-Facebook UI replaced with Naver and Kakao. Kakao uses the built-in provider. Naver is mapped to custom:naver and stays disabled until its custom provider configuration and end-to-end callback are verified; custom provider availability is an explicit deployment flag, not assumed from a displayed button. Provider registration and secrets remain pending owner developer-console sign-in. Contact: ceo@blueit.kr.
+Facebook UI replaced with Naver and Kakao. Kakao uses the built-in provider. Naver is mapped to custom:naver and stays disabled until its custom provider configuration and end-to-end callback are verified; custom provider availability is an explicit deployment flag, not assumed from a displayed button. Provider registration and secrets remain pending owner developer-console sign-in. Contact: sales@onna.life.
 
 ## Privacy, account controls and locales (2026-11-07)
 Public privacy/terms/rights pages, explicit age 14+ and terms acknowledgement, owner-only server timestamped acknowledgement records, data export and authenticated self-deletion are implemented. External fonts removed. Account deletion revokes sessions then deletes only the identity verified by Auth; no body-supplied owner ID is accepted. Frontend has no admin credentials.
